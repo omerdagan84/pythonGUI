@@ -14,6 +14,8 @@ class simpleapp_tk(tkinter.Tk):     #app defined as a class
         #this enables us to arrange the objects on a grid 
         self.grid()
 
+        self.C = tkinter.Canvas(self, bg="blue", height=250, width=300)
+
         #create a text box 'Entry' set parent as self
         #create a string variable
         self.entryVariable = tkinter.StringVar()
@@ -48,17 +50,24 @@ class simpleapp_tk(tkinter.Tk):     #app defined as a class
         self.entry.focus_set()
         self.entry.selection_range(0, tkinter.END)
 
+        self.C.grid(column=0, rows=2, columnspan=2,sticky='S')
         #set the windows geometry to the geometry set by its widgets
         #this fixes a resizing glitch where the window will keep resizing
         #for example if you enter a very long text
         self.update()
         self.geometry(self.geometry())       
+        self.count = 5
 
     def OnButtonClick(self):
         print ("You clicked the button !")
         self.labelVariable.set( self.entryVariable.get()+" (You clicked the button)" )
         self.entry.focus_set()
         self.entry.selection_range(0, tkinter.END)
+        coord = 10, 50, 240, 210
+        arc = self.C.create_arc(coord, start=0, extent=self.count, fill="red")
+        self.count += 5
+        self.C.update_idletasks
+        self.update()
 
     def OnPressEnter(self,event):
         print ("You pressed enter ")
