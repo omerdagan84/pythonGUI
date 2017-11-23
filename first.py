@@ -57,15 +57,19 @@ class simpleapp_tk(tkinter.Tk):     #app defined as a class
         self.update()
         self.geometry(self.geometry())       
         self.count = 5
+        self.arc = 0
 
     def OnButtonClick(self):
         print ("You clicked the button !")
         self.labelVariable.set( self.entryVariable.get()+" (You clicked the button)" )
         self.entry.focus_set()
         self.entry.selection_range(0, tkinter.END)
-        coord = 10, 50, 240, 210
-        arc = self.C.create_arc(coord, start=0, extent=self.count, fill="red")
-        self.count += 5
+        self.C.delete(self.arc)
+        coord = 10, 50, 240, 240
+        self.arc = self.C.create_arc(coord, start=0, extent=self.count, fill="red")
+        self.count += 15
+        if (self.count > 180):
+            self.count = 5
         self.C.update_idletasks
         self.update()
 
