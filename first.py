@@ -2,6 +2,7 @@
 # -*- coding: iso-8859-1 -*-
 
 import tkinter
+from lightswitch import lightswitch
 
 class simpleapp_tk(tkinter.Tk):     #app defined as a class
     def __init__(self,parent):          #define the init function of the class
@@ -30,9 +31,9 @@ class simpleapp_tk(tkinter.Tk):     #app defined as a class
 
         #create a button
         #set parent to self and set the text - bind click to function
-        button = tkinter.Button(self,text=u"Click me !", command=self.OnButtonClick)
+        self.button = tkinter.Button(self,text=u"Click me !", command=self.OnButtonClick)
         #place the item on the grid at location 0,1 
-        button.grid(column=1,row=0)
+        self.button.grid(column=1,row=0)
 
         #create a label 
         self.labelVariable = tkinter.StringVar()
@@ -46,11 +47,22 @@ class simpleapp_tk(tkinter.Tk):     #app defined as a class
         #allow resizing on the columns
         self.grid_columnconfigure(0,weight=1)
         #restrict resizing only on the horizontal axes
-        self.resizable(True,False)
+        self.resizable(False,False)
         self.entry.focus_set()
         self.entry.selection_range(0, tkinter.END)
 
-        self.C.grid(column=0, rows=2, columnspan=2,sticky='S')
+        self.C.grid(column=0, rows=2, columnspan=3)
+
+        self.lightsframe = tkinter.Frame(self)
+        self.lightsframe.grid(row=3, columnspan=3, sticky='EWS')
+        self.lightsframe.grid_rowconfigure(0, weight=1)
+        self.lightsframe.grid_columnconfigure(0, weight=1)
+        self.custom1 = lightswitch(self.lightsframe, "Living room", "test")
+        self.custom1.grid(column=0, row=1)
+        self.custom2 = lightswitch(self.lightsframe, "Kitchen", "test")
+        self.custom2.grid(column=1, row=1)
+        self.custom3 = lightswitch(self.lightsframe, "Balcony", "test")
+        self.custom3.grid(column=2, row=1)
         #set the windows geometry to the geometry set by its widgets
         #this fixes a resizing glitch where the window will keep resizing
         #for example if you enter a very long text
@@ -71,16 +83,20 @@ class simpleapp_tk(tkinter.Tk):     #app defined as a class
         if (self.count > 180):
             self.count = 5
         self.C.update_idletasks
+        self.button.configure(state='disabled')
         self.update()
+
 
     def OnPressEnter(self,event):
         print ("You pressed enter ")
         self.labelVariable.set( self.entryVariable.get()+" (You pressed ENTER)" )
         self.entry.focus_set()
         self.entry.selection_range(0, tkinter.END)
+        self.button.configure(state='active')
 
 
 if __name__ == "__main__":
     app = simpleapp_tk(None)    #start the app
     app.title('my application') #set the window lable
+    app.wm_geometry("600x600")
     app.mainloop()              #call mainloop
