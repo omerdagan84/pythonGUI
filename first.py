@@ -3,6 +3,7 @@
 
 import tkinter
 from lightswitch import lightswitch
+from boiler import boiler
 
 class simpleapp_tk(tkinter.Tk):     #app defined as a class
     def __init__(self,parent):          #define the init function of the class
@@ -45,7 +46,9 @@ class simpleapp_tk(tkinter.Tk):     #app defined as a class
         self.labelVariable.set(u"Hello !")
 
         #allow resizing on the columns
-        self.grid_columnconfigure(0,weight=1)
+        for i in range(5):
+            self.grid_columnconfigure(i,minsize=40)
+            self.grid_rowconfigure(i,minsize=40)
         #restrict resizing only on the horizontal axes
         self.resizable(False,False)
         self.entry.focus_set()
@@ -63,6 +66,9 @@ class simpleapp_tk(tkinter.Tk):     #app defined as a class
         self.custom2.grid(column=1, row=1)
         self.custom3 = lightswitch(self.lightsframe, "Balcony", "test")
         self.custom3.grid(column=2, row=1)
+
+        self.boiler = boiler(self.lightsframe, "test", "test")
+        self.boiler.grid(column=0, row=2, columnspan=1, sticky='E')
         #set the windows geometry to the geometry set by its widgets
         #this fixes a resizing glitch where the window will keep resizing
         #for example if you enter a very long text
@@ -98,5 +104,5 @@ class simpleapp_tk(tkinter.Tk):     #app defined as a class
 if __name__ == "__main__":
     app = simpleapp_tk(None)    #start the app
     app.title('my application') #set the window lable
-    app.wm_geometry("600x600")
+#    app.wm_geometry("600x600")
     app.mainloop()              #call mainloop
