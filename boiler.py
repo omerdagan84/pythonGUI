@@ -12,7 +12,7 @@ class boiler(tkinter.Frame):
 		self.timeSetText.set(u"120 min")
 
 		self.timerVal = 3
-		self.TimerDraw = tkinter.Canvas(self, bg="blue")
+		self.TimerDraw = tkinter.Canvas(self, bg="blue", height=parent.winfo_width(), width=parent.winfo_height())
 		coord = 5, 5, (parent.winfo_width() - 5), (parent.winfo_height() - 5)
 		self.timerArc = self.TimerDraw.create_arc(coord, start=0, extent=self.timerVal, fill="red")
 
@@ -20,7 +20,9 @@ class boiler(tkinter.Frame):
 		self.timeSet.grid(column=0, row=1)
 		self.TimerDraw.grid(column=0, row=2, sticky='EW')
 		self.grid_columnconfigure(0, weight=1)
+		self.grid_columnconfigure(1, weight=1)
 		self.grid_rowconfigure(0, weight=1)
+		self.grid_rowconfigure(1, weight=3)
 
 		self.update()
 
